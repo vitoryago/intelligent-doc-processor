@@ -14,10 +14,15 @@ from pathlib import Path
 from typing import List, Dict, Union, Optional
 from dataclasses import dataclass
 import logging
+import pytesseract
+from PIL import Image
+from pdf2image import convert_from_path
 
 # Set up logging to help us track what's happening in our processor
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 @dataclass
 class DocumentMetadata:
@@ -30,6 +35,7 @@ class DocumentMetadata:
     size: int
     page_count: Optional[int] = None
     processing_status: str = "pending"
+    text_content: str = ""
 
 class DocumentProcessor:
     """
@@ -64,6 +70,59 @@ class DocumentProcessor:
             processing_status="initialized"
         )
     
+    def _extract_text_from_image(self, image: Image.Image):
+        """
+        Helper method to extract text from a single image using OCR.
+        This is like reading text from a photograph or scanned document.
+        """
+
+        try:
+            # Use pytesseract to extract text from the image
+            text = pytesseract.image_to_string(image)
+            return text.strip()
+        except Exception as e:
+            logger.error(f"Error extracting text from image: {str(e)}")
+            raise
+    
+    def _extract_text_from_pdf(self, file_path: Path) -> str:
+        """
+        Helper method to extract texto from PDF files.
+        This converts each PDF page to an image and reads the text.
+        """
+        try:
+            # Convert PDF to images
+            pages = convert_from_path(file_path)
+
+            # Extract texto from each page
+            text_content = []
+            for page_num, page in enumerate(pages, 1):
+                logger.info(f"Processing page {page_num} of {file_path.name}")
+                page_text = self._extract_text_from_image(page)
+                text_content.append(page_text)
+            
+            return "\n\n".join(text_content)
+        
+        except Exception as e:
+            logger.error(f"Error extracting texto from PDF: {str(e)}")
+            raise
+    
+    def extract_text_from_document(self, file_path: Path) -> str:
+        """
+        Extract text content from a document file.
+        This method figures out what kind of document we have and processes it accordingly.
+        """
+        try:
+            if file_path.suffix.lower() == ".pdf":
+                logger.info(f"Processing PDF document: {file_path.name}")
+                return self._extract_text_from_pdf(file_path)
+            elif file_path.suffix.lower() in {".png", ".jpg", ".jpeg", ".tiff"}:
+                logger.info(f"Processing image document: {file_path.name}")
+                with Image.open(file_path) as img:
+                    return self._extract_text_from_image(img)
+        except Exception as e:
+            logger.error(f"Error extracting text from document: {str(e)}")
+            raise
+    
     def process_single_document(self, file_path: Union[str, Path]) -> Dict:
         """
         Process single document through our pipeline.
@@ -85,8 +144,16 @@ class DocumentProcessor:
         logger.info(f"Processing document: {metadata.filename}")
 
         try:
+
+            # Extract texto from the document
+            extracted_text = self.extract_text_from_document(file_path)
+            metadata.text_content = extracted_text
+            metadata.processing_status = "completed"
+
+            # Prepare the results
             result = {
                 "metadata": metadata.__dict__,
+                "content": extracted_text,
                 "status": "success",
                 "message": "Document processed successfully"
             }
@@ -94,6 +161,6 @@ class DocumentProcessor:
             return result
         
         except Exception as e:
-            logger.error(f"Error processing document {file_path}: {e}")
+            logger.error(f"Error processing document {file_path}: {str(e)}")
+            metadata.processing_status = "failed"
             raise
-        
