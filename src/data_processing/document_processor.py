@@ -77,4 +77,23 @@ class DocumentProcessor:
         """
 
         file_path = Path(file_path)
+
+        if file_path.suffix.lower() not in self.supported_formats:
+            raise ValueError(f"Unsupported format: {file_path.suffix}. Supported formats: {self.supported_formats}")
+        
+        metadata = self.get_document_metadata(file_path)
+        logger.info(f"Processing document: {metadata.filename}")
+
+        try:
+            result = {
+                "metadata": metadata.__dict__,
+                "status": "success",
+                "message": "Document processed successfully"
+            }
+
+            return result
+        
+        except Exception as e:
+            logger.error(f"Error processing document {file_path}: {e}")
+            raise
         
