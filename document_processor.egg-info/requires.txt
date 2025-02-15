@@ -1,0 +1,4 @@
+pytest
+pdf2image
+pytesseract
+pillow

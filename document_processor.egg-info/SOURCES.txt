@@ -1,0 +1,11 @@
+README.md
+setup.py
+document_processor.egg-info/PKG-INFO
+document_processor.egg-info/SOURCES.txt
+document_processor.egg-info/dependency_links.txt
+document_processor.egg-info/requires.txt
+document_processor.egg-info/top_level.txt
+src/__init__.py
+src/data_processing/__init__.py
+src/data_processing/document_processor.py
+tests/test_document_processor.py

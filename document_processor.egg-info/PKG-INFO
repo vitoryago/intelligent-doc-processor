@@ -1,0 +1,8 @@
+Metadata-Version: 2.2
+Name: document-processor
+Version: 0.1.0
+Requires-Dist: pytest
+Requires-Dist: pdf2image
+Requires-Dist: pytesseract
+Requires-Dist: pillow
+Dynamic: requires-dist
