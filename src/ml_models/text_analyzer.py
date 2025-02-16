@@ -43,6 +43,7 @@ class DocumentAnalyzer:
             'word_count': len(text.split()),
             'avg_word_length': np.mean([len(word) for word in text.split()]),
             'number_count': sum(c.isdigit() for c in text) / len(text) if text else 0,
+            'uppercase_ratio': sum(c.isupper() for c in text) / len(text) if text else 0
         }
 
         return features
