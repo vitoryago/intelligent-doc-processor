@@ -17,6 +17,7 @@ import logging
 import pytesseract
 from PIL import Image
 from pdf2image import convert_from_path
+from src.ml_models.text_analyzer import DocumentAnalyzer
 import sys
 
 # Set up paths with your specific Poppler location
@@ -154,13 +155,16 @@ class DocumentProcessor:
 
             # Extract texto from the document
             extracted_text = self.extract_text_from_document(file_path)
-            metadata.text_content = extracted_text
-            metadata.processing_status = "completed"
+            
+            # Perform ML analysis
+            analyzer = DocumentAnalyzer()
+            analysis_results = analyzer.analyze_document(extracted_text)
 
             # Prepare the results
             result = {
                 "metadata": metadata.__dict__,
                 "content": extracted_text,
+                "analysis": analysis_results,
                 "status": "success",
                 "message": "Document processed successfully"
             }
