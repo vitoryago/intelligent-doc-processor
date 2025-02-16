@@ -17,6 +17,11 @@ import logging
 import pytesseract
 from PIL import Image
 from pdf2image import convert_from_path
+import sys
+
+# Set up paths with your specific Poppler location
+POPPLER_PATH = r"C:\Program Files\Poppler\Release-24.08.0-0\poppler-24.08.0\Library\bin"
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 # Set up logging to help us track what's happening in our processor
 logging.basicConfig(level=logging.INFO)
@@ -86,24 +91,26 @@ class DocumentProcessor:
     
     def _extract_text_from_pdf(self, file_path: Path) -> str:
         """
-        Helper method to extract texto from PDF files.
-        This converts each PDF page to an image and reads the text.
+        Helper method to extract text from PDF files.
         """
         try:
-            # Convert PDF to images
-            pages = convert_from_path(file_path)
-
-            # Extract texto from each page
+            # Convert PDF to images using explicit poppler path
+            pages = convert_from_path(
+                file_path,
+                poppler_path=POPPLER_PATH  # Using our defined Poppler path
+            )
+            
+            # Extract text from each page
             text_content = []
             for page_num, page in enumerate(pages, 1):
                 logger.info(f"Processing page {page_num} of {file_path.name}")
-                page_text = self._extract_text_from_image(page)
-                text_content.append(page_text)
-            
+                text = pytesseract.image_to_string(page)
+                text_content.append(text.strip())
+
+            # Join all the text together with page breaks
             return "\n\n".join(text_content)
-        
         except Exception as e:
-            logger.error(f"Error extracting texto from PDF: {str(e)}")
+            logger.error(f"Error extracting text from PDF: {str(e)}")
             raise
     
     def extract_text_from_document(self, file_path: Path) -> str:

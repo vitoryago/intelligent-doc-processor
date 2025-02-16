@@ -1,0 +1,92 @@
+=== Document Analysis Result ===
+FileName: Analytics Engineer - Marketing.pdf
+File Type: .pdf
+Size: 68588 bytes
+Status: completed
+
+=== Extracted Text ===
+=) MoneyLion
+
+Analytics Engineer - Marketing
+About the Role
+
+MoneyLion is on a mission to give every American the power to make their best financial decisions. A key
+tenant of that mission is ensuring we are able to reach and onboard Americans looking to be empowered.
+
+We are looking for a talented and driven Analytics Engineer to join our dynamic Marketing Analytics team.
+As an Analytics Engineer, you will work at the intersection of marketing and technology to design, build,
+and optimize data pipelines and tools that support key business decisions. You will leverage your technical
+expertise to provide clean data sets to end users, modeling data in a way that empowers end users to
+answer their own questions. You will partner with data scientists, analysts, and marketers to ensure our
+data empowers us to optimize our marketing strategies and performance.
+
+Key Responsibilities
+
+e Work with the Director, Marketing Strategy & Analytics to define core marketing data architecture
+and data priorities to support a data driven marketing organization.
+
+e Operate as an owner - identify areas for improvement in the marketing data, tech stack, efficiency
+of data models and dashboards.
+
+e Liaise closely with data engineering to maintain scalable and reliable data pipelines that integrate
+marketing data across multiple sources (CRM, advertising platforms, analytics tools, etc.).
+
+e Work with cross-functional teams such as marketing, martech and data engineering to identify key
+data needs and integrate the data from various marketing channels (e.g., paid search, social
+media, email marketing) and ensure it is structured in a way that is easy to analyze and visualize.
+
+e Collaborate with data analysts and business stakeholders to develop data models that support
+marketing KPIs and metrics, such as customer acquisition cost (CAC), lifetime value (LTV),
+conversion rates, and ROI.
+
+e Develop and maintain proprietary in-house data models such as customer segmentation models
+and marketing attribution that drive and influence business performance.
+
+e Develop and maintain dashboards and reports to track key marketing performance indicators
+(KPIs) and provide insights into campaign performance, customer behavior, and channel
+effectiveness.
+
+Provide guidance on proper data tagging, user tracking and event instrumentation.
+Partner closely with marketing, data science, and engineering teams to ensure data needs are met,
+and that marketing strategies are informed by accurate and timely data insights.
+
+e Ensure that data quality standards are upheld and maintain a strong focus on robust
+documentation.
+
+e Train business teams on the adoption of key tools to nurture a “self-service” mindset from
+business partners.
+
+About You
+
+e Bachelor's Degree in Computer Science, Engineering, BUsiness Analysis, Mathematics, Statistics
+or related field.
+
+e Minimum of 3+ years experience in analytics engineering, data engineering or similar technical
+role.
+
+e Experience working with marketing data, martech and business intelligence tools (i.e. amplitude,
+Sisense).
+
+Experience working in a fintech or financial services company is a plus.
+
+Highly proficient in SQL; proficiency in python or another programming language for data
+manipulation.
+
+Familiarity with version control systems (e.g., Git).
+
+Experience with dbt modeling, ETL and rETL.
+
+Experience with Segment, Google Analytics, Google/Facebook Ads and CRM platforms (i.e. Braze,
+Iterable) a plus.
+
+A strong problem solver with experience overcoming ambiguity.
+
+Demonstrated ability in managing multiple projects with a strong attention to detail.
+
+High business acumen with a knack for how data can “fuel the business equation”.
+
+Ability to transform complex data sets into clear, actionable insights for marketing teams and other
+stakeholders.
+
+Excellent communication skills with ability to explain technical concepts to non-technical
+stakeholders.
