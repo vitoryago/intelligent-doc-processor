@@ -69,6 +69,31 @@ class DocumentAnalyzer:
                 }
             }
         }
+    
+    def _plot_word_importance(self, tfidf_matrix, feature_names, doc_names):
+        """
+        Creates a heatmap showing the most important words in each document.
+        """
+        plt.figure(figsize=(12,8))
+
+        # Get top 15 words for visualization
+        importance_scores = np.array(tfidf_matrix.toarray())
+        top_word_indices = importance_scores.sum(axis=0).argsort()[-15:]
+        top_words = [feature_names[i] for i in top_word_indices]
+
+        # Create heatmap
+        sns.heatmap(
+            importance_scores[:, top_word_indices],
+            xticklabels=top_words,
+            yticklabels=doc_names,
+            cmap='YlOrRd'
+        )
+
+        plt.title('Most Important Words in Each Document')
+        plt.xticks(rotation=45, ha='right')
+        plt.tight_layout()
+        plt.savefig('word_importance.png')
+        plt.close()
 
     def extract_features(self, text: str) -> dict:
         """
