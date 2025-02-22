@@ -14,6 +14,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 import logging
+import matplotlib.pyplot as plt
+import seaborn as sns
+from collections import Counter
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -34,6 +37,38 @@ class DocumentAnalyzer:
         # Initialize the model
         self.classifier_rf = RandomForestClassifier(n_estimators=100)
         self.classifier_lr = LogisticRegression(max_iter=1000)
+    
+    def compare_documents(self, doc1_text: str, doc2_text: str, doc1_name: str, doc2_name: str):
+        """
+        Compares two documents and visualizes their differences.
+        Think of this like having two documents side by side and noting their unique characteristics.
+        """
+
+        # Get basic features for both documents
+        doc1_features = self.extract_features(doc1_text)
+        doc2_features = self.extract_features(doc2_text)
+
+        # Get important words using TF-IDF
+        combined_texts = [doc1_text, doc2_text]
+        tfidf_matrix = self.vectorizer.fit_transform(combined_texts)
+        feature_names = self.vectorizer.get_feature_names_out()
+
+        # Create visualizations
+        self._plot_word_importance(tfidf_matrix, feature_names, [doc1_name, doc2_name])
+        self._plot_feature_comparison(doc1_features, doc2_features, doc1_name, doc2_name)
+
+        return {
+            'document_comparison': {
+                doc1_name: {
+                    'features': doc1_features,
+                    'top_words': self._get_top_words(doc1_text, 10)
+                },
+                doc2_name: {
+                    'features': doc2_features,
+                    'top_words': self._get_top_words(doc2_text, 10)
+                }
+            }
+        }
 
     def extract_features(self, text: str) -> dict:
         """
