@@ -94,6 +94,27 @@ class DocumentAnalyzer:
         plt.tight_layout()
         plt.savefig('word_importance.png')
         plt.close()
+    
+    def _plot_feature_comparison(self, features1, features2, name1, name2):
+        """
+        Creates a bar chart comparing document features.
+        """
+
+        plt.figure(figsize=(10, 6))
+
+        # Prepare data for visualization
+        features = pd.DataFrame({
+            name1: list(features1.values()),
+            name2: list(features2.values())
+        }, index=list(features1.keys()))
+
+        # Create grouped bar chart
+        features.plot(kind='bar')
+        plt.title('Document Feature Comparison')
+        plt.xticks(rotation=45, ha='right')
+        plt.tight_layout()
+        plt.savefig('feature_comparison.png')
+        plt.close()
 
     def extract_features(self, text: str) -> dict:
         """
