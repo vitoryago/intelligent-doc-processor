@@ -116,6 +116,21 @@ class DocumentAnalyzer:
         plt.savefig('feature_comparison.png')
         plt.close()
 
+    def _get_top_words(self, text: str, n: int = 10) -> list:
+        """
+        Gets the most frequent meaningful words in a text.
+        """
+
+        words = text.lower().split()
+        word_counts = Counter(words)
+
+        # Remove common English words
+        stop_words = set(['the', 'and', 'is', 'in', 'to', 'of', 'a', 'for'])
+        meaningful_words = [(word, count) for word, count in word_counts.items()
+                            if word not in stop_words and len(word) > 2]
+        
+        return sorted(meaningful_words, key=lambda x: x[1], reverse=True)[:n]
+
     def extract_features(self, text: str) -> dict:
         """
         Extract basic features from text that might indicate document type.
