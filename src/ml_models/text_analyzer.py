@@ -9,7 +9,7 @@ This module adds machine learning capabilities to our document processor:
 
 import numpy as np
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -28,7 +28,7 @@ class DocumentAnalyzer:
     """
 
     def __init__(self):
-        self.vectorizer = TfidfTransformer(
+        self.vectorizer = TfidfVectorizer(
             max_features = 1000, # Limit features to most important words
             stop_words = 'english', # Remove common English words
             ngram_range = (1, 2) # Use both single words and pair of words
