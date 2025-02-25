@@ -189,4 +189,3 @@ class DocumentAnalyzer:
                      (unique_words / total_words) * 100)
         
         return round(complexity, 2)
-
