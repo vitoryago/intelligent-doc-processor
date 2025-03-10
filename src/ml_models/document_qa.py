@@ -20,3 +20,14 @@ from langchain.prompts import PromptTemplate
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+class DocumentQA:
+    """
+    A system that can answer questions about documents by understanding their content.
+
+    This class:
+    1. Splits documents into manageable chunks
+    2. Creates vector embeddings for efficient retrievel
+    3. Uses language model to generate answers based on relevant contexts.
+    """
+    
