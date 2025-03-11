@@ -65,3 +65,53 @@ class DocumentQA:
         self.qa_chain = None
 
         logger.info("DocumentQA system initialized")
+    
+    def load_documents(self, text: str, document_name: str = "document") -> Dict:
+        """
+        Process a document for question answering
+
+        Args:
+            text: The document text content
+            document_name: A name to identify this document
+        Returns:
+            Information about the loaded document
+        """
+
+        logger.info(f"Loading document: {document_name}")
+
+        # Split the document into chunks
+        chunks = self.text_splitter.split_text(text)
+        chunk_count = len(chunks)
+        logger.info(f"Documento split into {chunk_count} chunks")
+
+        # Create metadata for each chunk to track its source
+        metadatas = [{"source": f"{document_name}", "chunk": i} for i in range(chunk_count)]
+
+        # Create a vector store from the chunks
+        self.vectorstore = FAISS.from_texts(
+            texts=chunks,
+            embedding=self.embeddings,
+            metadatas=metadatas
+        )
+
+        # Create a costum prompt template that instructs the model how to answer
+        qa_template = """
+        You are an intelligent document analysis assistant. You answer questions based on the provided context from a document.
+
+        Context information is below:
+        ------------------------------
+        {context}
+        ------------------------------
+
+        Given the context information and not prior knowledge, answer the question {question}
+
+        If the answer cannot be determined from the context, say "I cannot answer this based on the provided document."
+        """
+
+        PROMPT = PromptTemplate(
+            template=qa_template,
+            input_variables=["context", "question"]
+        )
+
+        # Create the QA chain that will retrieve relevant chunks and generate answers
+        self.qa_chain = retrieval_qa.from_chain_type()
