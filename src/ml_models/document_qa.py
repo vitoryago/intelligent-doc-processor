@@ -49,3 +49,19 @@ class DocumentQA:
             model_name = "gpt-3.5-turbo",
             temperature=0 # Use 0 for more factual, deterministic responses
         )
+
+        # Initialize the text splitter for breaking documents into chunks
+        self.text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunck_overlap=200,
+            separators=["\n\n", "\n", " ", ""]
+        )
+
+        # Initialize the embeddings model
+        self.embeddings = OpenAIEmbeddings()
+
+        # We'll create these per document
+        self.vectorstore = None
+        self.qa_chain = None
+
+        logger.info("DocumentQA system initialized")
