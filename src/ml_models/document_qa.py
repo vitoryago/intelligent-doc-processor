@@ -30,4 +30,22 @@ class DocumentQA:
     2. Creates vector embeddings for efficient retrievel
     3. Uses language model to generate answers based on relevant contexts.
     """
-    
+    def __init__(self, api_key: Optional[str] = None):
+        """
+        Initialize the document QA system.
+
+        Args:
+            api_key: OpenAI API key (optional if already set as environment variable)
+        """
+
+        # Set API key if provided
+        if api_key:
+            os.environ["OPENAI_API_KEY"] = api_key
+        elif not os.environ.get("OPENAI_API_KEY"):
+            raise ValueError("OpenAI API key is required either as parameter or environment variable")
+        
+        # Initialize the language model
+        self.llm = ChatOpenAI(
+            model_name = "gpt-3.5-turbo",
+            temperature=0 # Use 0 for more factual, deterministic responses
+        )
