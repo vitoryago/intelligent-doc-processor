@@ -114,4 +114,20 @@ class DocumentQA:
         )
 
         # Create the QA chain that will retrieve relevant chunks and generate answers
-        self.qa_chain = retrieval_qa.from_chain_type()
+        self.qa_chain = retrieval_qa.from_chain_type(
+            llm=self.llm,
+            chain_type="stuff",
+            retriever=self.vectorstore.as_retriever(
+                search_kwargs={"k": 3}
+            ),
+            chain_type_kwargs={"prompt": PROMPT}
+        )
+
+        # Return information about the document loading
+        return {
+            "status": "success",
+            "document_name": document_name,
+            "chunks": chunk_count,
+            "message": f"Document loaded successfully with {chunk_count} chunks"
+        }
+    
