@@ -131,3 +131,41 @@ class DocumentQA:
             "message": f"Document loaded successfully with {chunk_count} chunks"
         }
     
+    def ask(self, question:str) -> Dict:
+        """
+        Ask a question about the loaded document.
+
+        Args:
+            question: The question to answer based on document content
+        Returns:
+            Dictionary containing the answer and metadata
+        """
+
+        if not self.qa_chain:
+            logger.error("No document loaded. Please load a document first.")
+            return {
+                "status": "error",
+                "message": "No document loaded",
+                "answer": None
+            }
+
+        logger.info(f"Answering question: {question}")
+
+        try:
+            # Get the answer from the QA chain
+            result = self.qa_chain({"query": question})
+
+            return {
+                "status": "success",
+                "question": question,
+                "answer": result["result"],
+                "soruce_documents": result.get("source_documents", [])
+            }
+        
+        except Exception as e:
+            logger.error(f"Error answering question: {str(e)}")
+            return {
+                "status": "error",
+                "message": str(e),
+                "answer": None
+            }
