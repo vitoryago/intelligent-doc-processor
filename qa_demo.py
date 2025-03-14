@@ -40,4 +40,26 @@ def run_qa_demo():
     print(f"Document processed successfully. Word count {doc_result['analysis']['basic_features']['word_count']}")
 
     # Initialize our QA system
+    qa_system = DocumentQA(api_key=api_key)
+     # Load the document content
+    print("\nPreparing document for question answering...")
+    qa_result = qa_system.load_document(doc_result["content"], doc_path.stem)
+    print(f"Document prepared with {qa_result['chunks']} chunks")
     
+    # Define some sample questions
+    questions = [
+        "What is the main topic of this document?",
+        "What does immutability mean according to this text?",
+        "Why is God's immutability important according to the author?"
+    ]
+    
+    # Answer each question
+    print("\n=== Document Question-Answering Demo ===")
+    for i, question in enumerate(questions, 1):
+        print(f"\nQuestion {i}: {question}")
+        print("Thinking...")
+        answer = qa_system.ask(question)
+        print(f"Answer: {answer['answer']}")
+
+if __name__ == "__main__":
+    run_qa_demo()
