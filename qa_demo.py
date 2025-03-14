@@ -34,3 +34,10 @@ def run_qa_demo():
 
     # Process document
     doc_path = Path("test_documents/The Immutability of God.pdf")
+
+    print(f"\nProcessing document: {doc_path.name}...")
+    doc_result = processor.process_single_document(doc_path)
+    print(f"Document processed successfully. Word count {doc_result['analysis']['basic_features']['word_count']}")
+
+    # Initialize our QA system
+    
