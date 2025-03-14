@@ -30,3 +30,7 @@ def run_qa_demo():
         os.environ["OPENAI_API_KEY"] = api_key
     
     # Initialize our document processor
+    processor = DocumentProcessor("test_documents", "processed_documents")
+
+    # Process document
+    doc_path = Path("test_documents/The Immutability of God.pdf")
