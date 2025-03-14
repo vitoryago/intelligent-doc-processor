@@ -18,3 +18,8 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+
+def run_qa_demo():
+    """
+    Run a demonstration of document QA capabilities.
+    """
