@@ -23,3 +23,10 @@ def run_qa_demo():
     """
     Run a demonstration of document QA capabilities.
     """
+
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        api_key = input("Please enter your OpenAI API key:")
+        os.environ["OPENAI_API_KEY"] = api_key
+    
+    # Initialize our document processor
