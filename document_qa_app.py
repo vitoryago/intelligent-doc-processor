@@ -16,3 +16,16 @@ import time
 
 from src.data_processing.document_processor import DocumentProcessor
 from src.ml_models.document_qa import DocumentQA
+
+# Page configuration
+st.set_page_config(page_title="Document Intelligence System", layout="wide")
+
+# Header
+st.title("📄 Intelligent Document QA System")
+st.markdown("""
+This application demonstrates an advanced document processing system that can:
+- Extract text from PDF and image documents
+- Analyze document content and features
+- Answer questions about document content
+""")
+
