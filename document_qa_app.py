@@ -29,3 +29,24 @@ This application demonstrates an advanced document processing system that can:
 - Answer questions about document content
 """)
 
+# Sidebar for API key
+with st.sidebar:
+    st.header("Configuration")
+    api_key = st.text_input("OpenAI API key", type="password",
+                            help="Enter your OpenAI API key to enable document processing")
+    st.markdown("---")
+    st.markdown("### About")
+    st.markdown("This system combines OCR, embeddings, and language models to create an intelligent document analysis tool.")
+    st.markdown("Built by: Vitor C.")
+
+# Main content
+tab1, tab2 = st.tabs(["Document Analysis", "Question Answreing"])
+
+# Initialize session state
+if 'processed_document' not in st.session_state:
+    st.session_state.processed_document = None
+if 'qa_system' not in st.session_state:
+    st.session_state.qa_system = None
+if 'document_name' not in st.session_state:
+    st.session_state.document_name = None
+
