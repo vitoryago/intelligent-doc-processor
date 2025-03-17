@@ -49,5 +49,3 @@ if 'qa_system' not in st.session_state:
     st.session_state.qa_system = None
 if 'document_name' not in st.session_state:
     st.session_state.document_name = None
-
-# Document Analysis Tab
